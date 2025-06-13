@@ -52,4 +52,8 @@ public class PowerStation extends CityResource implements Alertable { // no need
                 ", stationType='" + stationType + '\'' +
                 '}';
     }
+
+    public Object[] toTableRow(){
+        return new Object[] {resourceID, location, status, energyOutput, outageProne, stationType};
+    }
 }

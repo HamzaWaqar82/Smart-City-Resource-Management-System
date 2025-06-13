@@ -1,38 +1,27 @@
-package Main;
+package Interface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import Main.JSONManager;
+import Main.FileManager;
+import Main.TransportUnit;
 
-public class UserInterface extends JFrame {
+public class TransportPanel {
 
-    private List<TransportUnit> transportList = new ArrayList<>();
-    private DefaultTableModel transportTableModel;
+    private static List<TransportUnit> transportList = new ArrayList<>();
+    private static DefaultTableModel transportTableModel;
 
-    public void renderDashboard() {
-        JFrame frame = new JFrame("Smart City Resource Management System");
-        setSize(1000, 700);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(null);
-
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBounds(10, 10, 960, 740);
-
-        tabbedPane.add("Transport Unit", createTransportPanel());
-
-        tabbedPane.add("Power Stations", createPowerPanel());
-
-        tabbedPane.add("Emergency Services", createEmergencyPanel());
-
-        add(tabbedPane);
-        setVisible(true);
-    }
-
-    private JPanel createTransportPanel() {
+    protected static JPanel createTransportPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
@@ -157,7 +146,7 @@ public class UserInterface extends JFrame {
                 transportList.remove(toDeleteRow);
                 refreshTableModel();
             } else {
-                JOptionPane.showMessageDialog(this, "Select a row first!");
+                JOptionPane.showMessageDialog(panel, "Select a row first!");
             }
         });
 
@@ -219,13 +208,13 @@ public class UserInterface extends JFrame {
 
         // Save Logic
         btnSave.addActionListener(e -> {
-            JSONManager.save(transportList, "transport_units.json");
+            FileManager.save(panel, transportList, "Transport Units", "json");
             JOptionPane.showMessageDialog(panel, "Transport units saved to JSON.");
         });
 
         // Load Logic
         btnLoad.addActionListener(e -> {
-            List<TransportUnit> loaded = JSONManager.load("transport_units.json");
+            List<TransportUnit> loaded = FileManager.load("transport_units.json");
             if (loaded != null) {
                 transportList.clear();
                 transportTableModel.setRowCount(0);
@@ -242,7 +231,7 @@ public class UserInterface extends JFrame {
         return panel;
     }
 
-    private void refreshTableModel() {
+    private static void refreshTableModel() {
         transportTableModel.setRowCount(0);
 
         for (TransportUnit transportUnit : transportList) {
@@ -250,11 +239,4 @@ public class UserInterface extends JFrame {
         }
     }
 
-    private JPanel createPowerPanel() {
-        return new JPanel();
-    }
-
-    private JPanel createEmergencyPanel() {
-        return new JPanel();
-    }
 }
