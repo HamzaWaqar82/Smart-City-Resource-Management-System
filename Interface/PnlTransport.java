@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 import Main.FileManager;
 import Main.TransportUnit;
 
-public class TransportPanel {
+public class PnlTransport {
 
     private static List<TransportUnit> transportList = new ArrayList<>();
     private static DefaultTableModel transportTableModel;
@@ -216,7 +216,7 @@ public class TransportPanel {
 
         // Load Logic
         btnLoad.addActionListener(e -> {
-            Type listType = new TypeToken<List<TransportUnit>>() {}.getClass();
+            Type listType = new TypeToken<List<TransportUnit>>() {}.getType();
 
             List<TransportUnit> loaded = FileManager.load(panel, listType, "Transport Units", "json");
 

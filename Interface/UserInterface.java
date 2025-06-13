@@ -20,18 +20,14 @@ public class UserInterface extends JFrame {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setBounds(10, 10, 960, 740);
 
-        tabbedPane.add("Transport Unit", TransportPanel.createTransportPanel());
+        tabbedPane.add("Transport Unit", PnlTransport.createTransportPanel());
 
-        tabbedPane.add("Power Stations", createPowerPanel());
+        tabbedPane.add("Power Stations", PnlPowerStation.createPowerPanel());
 
         tabbedPane.add("Emergency Services", createEmergencyPanel());
 
         add(tabbedPane);
         setVisible(true);
-    }
-
-    private JPanel createPowerPanel() {
-        return new JPanel();
     }
 
     private JPanel createEmergencyPanel() {

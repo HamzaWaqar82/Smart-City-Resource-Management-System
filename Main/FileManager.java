@@ -23,15 +23,15 @@ public class FileManager {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter(filename, fileExtension));
-        fileChooser.setCurrentDirectory(new File(".")); // set defalu directory to current
-        fileChooser.setFileSelectionMode(fileChooser.FILES_ONLY); // we can only select files not folders
+        fileChooser.setCurrentDirectory(new File(".")); // set default directory to current
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY); // we can only select files not folders
 
         int result = fileChooser.showSaveDialog(parent); // open popup for selecting files, return 0 if click on save, 1
                                                          // if cancel, and -1 if any error occurs
 
         File selectedFile;
 
-        if (result == fileChooser.APPROVE_OPTION) {
+        if (result == JFileChooser.APPROVE_OPTION) {
 
             selectedFile = fileChooser.getSelectedFile();
 
@@ -59,13 +59,13 @@ public class FileManager {
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("."));
-        fileChooser.setFileSelectionMode(fileChooser.FILES_ONLY);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setFileFilter(new FileNameExtensionFilter(description, fileExtension));
 
         int result = fileChooser.showOpenDialog(parent);
 
         File selectedFile;
-        if (result == fileChooser.APPROVE_OPTION) {
+        if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
         } else {
             return null;
