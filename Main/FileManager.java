@@ -47,7 +47,7 @@ public class FileManager {
 
             try (FileWriter writer = new FileWriter(selectedFile)) {
                 gson.toJson(data, writer);
-                JOptionPane.showMessageDialog(parent, "saved to" + selectedFile.getName());
+                JOptionPane.showMessageDialog(parent, "saved to" + selectedFile.getName()); 
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -55,14 +55,24 @@ public class FileManager {
     }
 
     // Load from file
-    public static List<TransportUnit> load(String filename) {
-        try (FileReader reader = new FileReader(filename)) {
+    public static <T> T load(Component parent, Type typeOfT, String description, String fileExtension) {
 
-            Type listType = new TypeToken<List<TransportUnit>>() {
-            }.getType();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("."));
+        fileChooser.setFileSelectionMode(fileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter(description, fileExtension));
 
-            return gson.fromJson(reader, listType);
+        int result = fileChooser.showOpenDialog(parent);
 
+        File selectedFile;
+        if (result == fileChooser.APPROVE_OPTION) {
+            selectedFile = fileChooser.getSelectedFile();
+        } else {
+            return null;
+        }
+
+        try (FileReader reader = new FileReader(selectedFile)) {
+            return gson.fromJson(reader, typeOfT);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

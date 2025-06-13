@@ -13,6 +13,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+
 import Main.FileManager;
 import Main.TransportUnit;
 
@@ -209,12 +212,14 @@ public class TransportPanel {
         // Save Logic
         btnSave.addActionListener(e -> {
             FileManager.save(panel, transportList, "Transport Units", "json");
-            JOptionPane.showMessageDialog(panel, "Transport units saved to JSON.");
         });
 
         // Load Logic
         btnLoad.addActionListener(e -> {
-            List<TransportUnit> loaded = FileManager.load("transport_units.json");
+            Type listType = new TypeToken<List<TransportUnit>>() {}.getClass();
+
+            List<TransportUnit> loaded = FileManager.load(panel, listType, "Transport Units", "json");
+
             if (loaded != null) {
                 transportList.clear();
                 transportTableModel.setRowCount(0);
@@ -225,6 +230,7 @@ public class TransportPanel {
                 JOptionPane.showMessageDialog(panel, "Transport units loaded from JSON.");
             } else {
                 JOptionPane.showMessageDialog(panel, "Failed to load file.", "Error", JOptionPane.ERROR_MESSAGE);
+                
             }
         });
 
