@@ -51,4 +51,8 @@ public class EmergencyService extends CityResource implements Alertable {
                 ", numberOFUnits=" + numberOFUnits +
                 '}';
     }
+
+    public Object[] toTableRow(){
+        return new Object[] {resourceID, location, status, responseTime, unitType, numberOFUnits};
+    }
 }

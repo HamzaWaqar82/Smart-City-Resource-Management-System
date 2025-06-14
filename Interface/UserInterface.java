@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import Main.FileManager;
 import Main.TransportUnit;
 
+
 public class UserInterface extends JFrame {
 
     public void renderDashboard() {
@@ -24,13 +25,11 @@ public class UserInterface extends JFrame {
 
         tabbedPane.add("Power Stations", PnlPowerStation.createPowerPanel());
 
-        tabbedPane.add("Emergency Services", createEmergencyPanel());
+        tabbedPane.add("Emergency Services", PnlEmergeny.createEmergenyJPanel());
 
         add(tabbedPane);
         setVisible(true);
     }
 
-    private JPanel createEmergencyPanel() {
-        return new JPanel();
-    }
+
 }
