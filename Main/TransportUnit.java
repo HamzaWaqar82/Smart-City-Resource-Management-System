@@ -5,14 +5,15 @@ public class TransportUnit extends CityResource {
     private int capacity;
     private int currentPassengers;
 
-    public TransportUnit(String resourceID, String location, String status, String fuelType, int capacity,
+    public TransportUnit(String resourceID, String location, String status,int x, int y, String fuelType, int capacity,
             int currentPassengers) {
-        super(resourceID, location, status);
+        super(resourceID, location, status, x, y);
 
         this.fuelType = fuelType;
         this.capacity = capacity;
         this.currentPassengers = currentPassengers;
     }
+
 
     @Override
     public double calculateMaintenanceCost() {

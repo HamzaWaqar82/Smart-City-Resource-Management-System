@@ -14,9 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.google.gson.reflect.TypeToken;
+
+import java.awt.Point;
 import java.lang.reflect.Type;
 
 import Main.FileManager;
+import Main.LocationManager;
 import Main.TransportUnit;
 
 public class PnlTransport {
@@ -108,6 +111,11 @@ public class PnlTransport {
         btnGenerateUserReport.setBounds(20, 340, 260, 30);
         panel.add(btnGenerateUserReport);
 
+
+        PnlMap pnlMap = new PnlMap(new ArrayList<>(transportList));
+        pnlMap.setBounds(20, 380, 700, 300);
+        panel.add(pnlMap);
+
         // listener for the transport unit add btn
         btnAdd.addActionListener(e -> {
             try {
@@ -124,7 +132,9 @@ public class PnlTransport {
                 // ab ham in vales sy transport unit ka object banain ga aur usy ham apni
                 // transport arraylist aur table dono ma add kr dain gain
 
-                TransportUnit newUnit = new TransportUnit(id, location, status, fuelType, capacity, capacity);
+
+                Point locationCoordinate = LocationManager.assignLoaction();
+                TransportUnit newUnit = new TransportUnit(id, location, status, locationCoordinate.x, locationCoordinate.y, fuelType, capacity, capacity);// second capacity is for current passengers
 
                 transportList.add(newUnit);
                 transportTableModel.addRow(newUnit.toTableRow());
