@@ -26,6 +26,7 @@ public class PnlTransport {
 
     private static List<TransportUnit> transportList = new ArrayList<>();
     private static DefaultTableModel transportTableModel;
+    private static PnlMap pnlMap;
 
     protected static JPanel createTransportPanel() {
         JPanel panel = new JPanel();
@@ -111,38 +112,31 @@ public class PnlTransport {
         btnGenerateUserReport.setBounds(20, 340, 260, 30);
         panel.add(btnGenerateUserReport);
 
-
-        PnlMap pnlMap = new PnlMap(new ArrayList<>(transportList));
+        pnlMap = new PnlMap(new ArrayList<>(transportList));
         pnlMap.setBounds(20, 380, 700, 300);
         panel.add(pnlMap);
 
         // listener for the transport unit add btn
         btnAdd.addActionListener(e -> {
             try {
-                String id = txtID.getText(); // gettext() us particular text field ki text ko extract krta hy aur ham
-                                             // isy save krwa rhy hain varibale ma taky ham uisy apny table me add
-                                             // krskain as a row
+                String id = txtID.getText();
                 String location = txtLocation.getText();
-                String status = (String) comboBoxStatus.getSelectedItem(); // selected item ki text ko i extract kry ga
-                                                                           // bas
+                String status = (String) comboBoxStatus.getSelectedItem();
                 String fuelType = txtFuel.getText();
                 int capacity = Integer.parseInt(txtCapacity.getText());
 
-                // ye hamare pass values i gain hain
-                // ab ham in vales sy transport unit ka object banain ga aur usy ham apni
-                // transport arraylist aur table dono ma add kr dain gain
-
-
                 Point locationCoordinate = LocationManager.assignLoaction();
-                TransportUnit newUnit = new TransportUnit(id, location, status, locationCoordinate.x, locationCoordinate.y, fuelType, capacity, capacity);// second capacity is for current passengers
+                TransportUnit newUnit = new TransportUnit(id, location, status, locationCoordinate.x,
+                        locationCoordinate.y, fuelType, capacity, capacity);
 
                 transportList.add(newUnit);
                 transportTableModel.addRow(newUnit.toTableRow());
+                pnlMap.updateMap(new ArrayList<>(transportList));
 
-                // ab hamain textfields ko clear krna hy
+                // Clear text fields
                 txtID.setText("");
                 txtLocation.setText("");
-                comboBoxStatus.setAction(null);
+                comboBoxStatus.setSelectedIndex(0);
                 txtFuel.setText("");
                 txtCapacity.setText("");
 
@@ -151,13 +145,14 @@ public class PnlTransport {
             }
         });
 
-        // Listner for the dlete btn
+        // Listner for the delete btn
         btnDelete.addActionListener(e -> {
             int toDeleteRow = table.getSelectedRow();
 
             if (toDeleteRow != -1) {
                 transportList.remove(toDeleteRow);
                 refreshTableModel();
+                pnlMap.updateMap(new ArrayList<>(transportList));
             } else {
                 JOptionPane.showMessageDialog(panel, "Select a row first!");
             }
@@ -226,7 +221,8 @@ public class PnlTransport {
 
         // Load Logic
         btnLoad.addActionListener(e -> {
-            Type listType = new TypeToken<List<TransportUnit>>() {}.getType();
+            Type listType = new TypeToken<List<TransportUnit>>() {
+            }.getType();
 
             List<TransportUnit> loaded = FileManager.load(panel, listType, "Transport Units", "json");
 
@@ -237,10 +233,10 @@ public class PnlTransport {
                     transportList.add(t);
                     transportTableModel.addRow(t.toTableRow());
                 }
+                pnlMap.updateMap(new ArrayList<>(transportList));
                 JOptionPane.showMessageDialog(panel, "Transport units loaded from JSON.");
             } else {
                 JOptionPane.showMessageDialog(panel, "Failed to load file.", "Error", JOptionPane.ERROR_MESSAGE);
-                
             }
         });
 

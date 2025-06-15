@@ -13,7 +13,7 @@ public class LocationManager {
 
     private static final Set<Point> assignedPoints = new HashSet<>();
 
-    // create grid 10x5
+    // create grid 10xrad5
     static{
         int spacingX = 80, spacingY = 60;
 
