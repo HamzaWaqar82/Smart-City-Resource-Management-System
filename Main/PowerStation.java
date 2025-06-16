@@ -1,22 +1,24 @@
 package Main;
 
-public class PowerStation extends CityResource implements Alertable { // no need to impliment the Reportable here because its already impliment in the base class city resource
+public class PowerStation extends CityResource implements Alertable { // no need to impliment the Reportable here
+                                                                      // because its already impliment in the base class
+                                                                      // city resource
     private double energyOutput;
     private boolean outageProne;
     private String stationType;
 
-    public PowerStation( String resourceID, String location, String status, double energyOutput, boolean outageProne, String stationType){
-        super(resourceID, location, status);
-
+    public PowerStation(String resourseID, String location, String status, int x, int y, double energyOutput,
+            boolean outageProne, String stationType) {
+        super(resourseID, location, status, x, y);
         this.energyOutput = energyOutput;
         this.outageProne = outageProne;
         this.stationType = stationType;
     }
 
-
     @Override
     public double calculateMaintenanceCost() {
-        // Example calculation: base cost + variable cost based on energy output and outage risk
+        // Example calculation: base cost + variable cost based on energy output and
+        // outage risk
         double baseCost = 1000.0;
         double outputCost = energyOutput * 0.05;
         double outageCost = outageProne ? 500.0 : 0.0;
@@ -26,13 +28,13 @@ public class PowerStation extends CityResource implements Alertable { // no need
     @Override
     public String generateUserReport() {
         return "PowerStation Report:\n" +
-               "Resource ID: " + getResourceID() + "\n" +
-               "Location: " + getLocation() + "\n" +
-               "Status: " + getStatus() + "\n" +
-               "Energy Output: " + energyOutput + " MW\n" +
-               "Outage Prone: " + (outageProne ? "Yes" : "No") + "\n" +
-               "Station Type: " + stationType + "\n" +
-               "Maintenance Cost: $" + calculateMaintenanceCost();
+                "Resource ID: " + getResourceID() + "\n" +
+                "Location: " + getLocation() + "\n" +
+                "Status: " + getStatus() + "\n" +
+                "Energy Output: " + energyOutput + " MW\n" +
+                "Outage Prone: " + (outageProne ? "Yes" : "No") + "\n" +
+                "Station Type: " + stationType + "\n" +
+                "Maintenance Cost: $" + calculateMaintenanceCost();
     }
 
     @Override
@@ -53,7 +55,15 @@ public class PowerStation extends CityResource implements Alertable { // no need
                 '}';
     }
 
-    public Object[] toTableRow(){
-        return new Object[] {resourceID, location, status, energyOutput, outageProne, stationType};
+    public Object[] toTableRow() {
+        return new Object[] { resourceID, location, status, energyOutput, outageProne, stationType };
+    }
+
+    public double getEnergyOutput() {
+        return energyOutput;
+    }
+
+    public String getStationType() {
+        return stationType;
     }
 }

@@ -5,23 +5,25 @@ import javax.swing.table.DefaultTableModel;
 
 import com.google.gson.reflect.TypeToken;
 
+import Main.LocationManager;
 import Main.PowerStation;
 
+import java.awt.Point;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PnlPowerStation {
     protected static List<PowerStation> powerStationList = new ArrayList<>();
-    private  static DefaultTableModel powerStationTableModel;
+    private static DefaultTableModel powerStationTableModel;
+    public static PnlMap pnlMap;
 
     protected static JPanel createPowerPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
         // 1. label
-        
-        
+
         // 4. energy output
         // 5. outage
         // 6. type
@@ -43,12 +45,12 @@ public class PnlPowerStation {
         txtLocation.setBounds(130, 60, 150, 25);
         panel.add(txtLocation);
 
-// 3. status
+        // 3. status
         JLabel lblStatus = new JLabel("Status:");
         lblStatus.setBounds(20, 100, 100, 25);
         panel.add(lblStatus);
 
-        JComboBox<String> comboBoxStatus = new JComboBox<>(new String[]{"Active", "Inactive", "Maintenance"});
+        JComboBox<String> comboBoxStatus = new JComboBox<>(new String[] { "Active", "Inactive", "Maintenance" });
         comboBoxStatus.setBounds(130, 100, 150, 25);
         panel.add(comboBoxStatus);
 
@@ -79,7 +81,7 @@ public class PnlPowerStation {
         panel.add(txtType);
 
         // Table
-        String[] columns = {"ID", "Location", "Status", "Energy Output", "Outage Prone", "Station Type"};
+        String[] columns = { "ID", "Location", "Status", "Energy Output", "Outage Prone", "Station Type" };
         powerStationTableModel = new DefaultTableModel(columns, 0);
         JTable table = new JTable(powerStationTableModel);
         JScrollPane scrollPane = new JScrollPane(table);
@@ -115,6 +117,11 @@ public class PnlPowerStation {
         btnLoad.setBounds(720, 340, 150, 30);
         panel.add(btnLoad);
 
+
+        pnlMap = new PnlMap(new ArrayList<>(powerStationList));
+        pnlMap.setBounds(20, 460, 700, 300);
+        panel.add(pnlMap);
+
         // Add PowerStation
         btnAdd.addActionListener(e -> {
             try {
@@ -125,9 +132,13 @@ public class PnlPowerStation {
                 boolean outage = chkOutage.isSelected();
                 String type = txtType.getText();
 
-                PowerStation ps = new PowerStation(id, location, status, output, outage, type);
+                Point locationCoordinate = LocationManager.assignLoaction();
+                
+                PowerStation ps = new PowerStation(id, location, status, locationCoordinate.x, locationCoordinate.y, output, outage, type);
+
                 powerStationList.add(ps);
                 powerStationTableModel.addRow(ps.toTableRow());
+                pnlMap.updateMap(new ArrayList<>(powerStationList));
 
                 txtID.setText("");
                 txtLocation.setText("");
@@ -146,6 +157,7 @@ public class PnlPowerStation {
             if (row != -1) {
                 powerStationList.remove(row);
                 refreshPowerStationTableModel();
+                pnlMap.updateMap(new ArrayList<>(powerStationList));
             } else {
                 JOptionPane.showMessageDialog(panel, "Select a row first!");
             }
@@ -195,8 +207,9 @@ public class PnlPowerStation {
         // Load from JSON
         btnLoad.addActionListener(e -> {
 
-            Type listType = new TypeToken<List<PowerStation>>() {}.getType();
-            
+            Type listType = new TypeToken<List<PowerStation>>() {
+            }.getType();
+
             List<PowerStation> loaded = Main.FileManager.load(panel, listType, "power_stations.json", "json");
 
             if (loaded != null) {

@@ -6,11 +6,10 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import Main.FileManager;
-import Main.TransportUnit;
-
+import Main.SmartGrid;
 
 public class UserInterface extends JFrame {
+    private SmartGrid smartGrid = new SmartGrid();
 
     public void renderDashboard() {
         JFrame frame = new JFrame("Smart City Resource Management System");
@@ -27,9 +26,10 @@ public class UserInterface extends JFrame {
 
         tabbedPane.add("Emergency Services", PnlEmergeny.createEmergenyJPanel());
 
+        tabbedPane.add("Smart Grid", PnlSmartGrid.createSmartGridPanel());
+
         add(tabbedPane);
         setVisible(true);
     }
-
 
 }

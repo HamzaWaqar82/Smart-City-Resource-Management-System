@@ -5,10 +5,10 @@ public class EmergencyService extends CityResource implements Alertable {
     private String unitType;
     private int numberOFUnits;
 
-    public EmergencyService(String resourceID, String location, String status, int responseTime, String unitType,
-            int numberOFUnits) {
-        super(resourceID, location, status);
 
+    public EmergencyService(String resourceID, String location, String status, int x, int y, int responseTime, String unitType,
+            int numberOFUnits) {
+        super(resourceID, location, status, x, y);
         this.responseTime = responseTime;
         this.unitType = unitType;
         this.numberOFUnits = numberOFUnits;
@@ -52,7 +52,7 @@ public class EmergencyService extends CityResource implements Alertable {
                 '}';
     }
 
-    public Object[] toTableRow(){
-        return new Object[] {resourceID, location, status, responseTime, unitType, numberOFUnits};
+    public Object[] toTableRow() {
+        return new Object[] { resourceID, location, status, responseTime, unitType, numberOFUnits };
     }
 }
