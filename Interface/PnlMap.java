@@ -14,7 +14,7 @@ public class PnlMap extends JPanel {
 
     public PnlMap(List<CityResource> resources) {
         this.resources = resources;
-        setPreferredSize(new Dimension(800, 400));
+        setPreferredSize(new Dimension(800, 250));
         setBackground(Color.LIGHT_GRAY);
     }
 

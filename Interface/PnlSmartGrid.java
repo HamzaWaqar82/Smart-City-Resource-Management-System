@@ -23,7 +23,7 @@ public class PnlSmartGrid {
         JPanel panel = new JPanel();
         panel.setLayout(null);
 
-        // Grid Management
+        // Grid 
         JLabel lblGridID = new JLabel("Grid Name:");
         lblGridID.setBounds(20, 20, 100, 25);
         panel.add(lblGridID);
@@ -47,7 +47,14 @@ public class PnlSmartGrid {
         gridScrollPane.setBounds(320, 20, 600, 120);
         panel.add(gridScrollPane);
 
-        // PowerStation Management in Grid
+
+
+
+
+
+
+
+        // PowerStation Management
         JLabel lblPS = new JLabel("Power Stations in Grid:");
         lblPS.setBounds(20, 110, 200, 25);
         panel.add(lblPS);
@@ -65,7 +72,12 @@ public class PnlSmartGrid {
         btnRemovePS.setBounds(20, 180, 260, 30);
         panel.add(btnRemovePS);
 
-        // Consumer Management in Grid
+
+
+
+
+        
+        // Consumers in Grid
         JLabel lblConsumer = new JLabel("Consumers in Grid:");
         lblConsumer.setBounds(20, 230, 200, 25);
         panel.add(lblConsumer);

@@ -15,7 +15,7 @@ public class LocationManager {
 
     // create grid 10xrad5
     static{
-        int spacingX = 80, spacingY = 60;
+        int spacingX = 60, spacingY = 40;
 
         for (int i = 1; i <= 10; i++) {
             for (int j = 1; j <=5; j++) {
@@ -35,7 +35,7 @@ public class LocationManager {
         }
 
         // if no available points
-        return new Point(new Random().nextInt(700), new Random().nextInt(400));
+        return new Point(new Random().nextInt(700), new Random().nextInt(250));
     }
 
     public static void resetLocations(){

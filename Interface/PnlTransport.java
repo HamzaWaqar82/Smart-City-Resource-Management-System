@@ -113,7 +113,7 @@ public class PnlTransport {
         panel.add(btnGenerateUserReport);
 
         pnlMap = new PnlMap(new ArrayList<>(transportList));
-        pnlMap.setBounds(20, 380, 700, 300);
+        pnlMap.setBounds(20, 400, 900, 200);
         panel.add(pnlMap);
 
         // listener for the transport unit add btn

@@ -119,7 +119,7 @@ public class PnlPowerStation {
 
 
         pnlMap = new PnlMap(new ArrayList<>(powerStationList));
-        pnlMap.setBounds(20, 460, 700, 300);
+        pnlMap.setBounds(20, 400, 900, 200);
         panel.add(pnlMap);
 
         // Add PowerStation

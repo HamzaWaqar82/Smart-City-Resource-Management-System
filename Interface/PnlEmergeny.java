@@ -126,7 +126,7 @@ public class PnlEmergeny {
         panel.add(btnLoad);
 
         pnlMap = new PnlMap(new ArrayList<>(emergencyList));
-        pnlMap.setBounds(20, 380, 700, 300);
+        pnlMap.setBounds(20, 400, 900, 200);
         panel.add(pnlMap);
 
         // ADD button listener
